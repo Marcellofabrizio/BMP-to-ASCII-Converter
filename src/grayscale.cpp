@@ -12,7 +12,7 @@
 
 struct pixel{uint8_t r,g,b;};
 
-unsigned char scale[70] = {'$','@','B','%','8','&','W','M','#','*','o','a','h','k','b','d','p','q','w','m','Z','O','0','Q','L','C','J','U','Y','X','z','c','v','u','n','x','r','j','f','t','/',';','|','(',')','1','{','}','[',']','?','-','_','+','~','<','>','i','!',' '};
+unsigned char scale[10] = {' ','.',':','-','=','+','*','#','%','@'};
 
 struct teste{uint16_t c1;uint32_t c2;};
 
@@ -52,8 +52,8 @@ void printbin(char texto[], unsigned int valor)
 int main() {
     FILE *imagem;
     FILE *nova;
-    imagem = fopen("C:\\Users\\marce\\Desktop\\Atom\\C_Uni\\Images\\liberty.bmp", "rb");
-    nova = fopen("C:\\Users\\marce\\Desktop\\Atom\\C_Uni\\Text Files\\asciiLiberty.txt", "wt");
+    imagem = fopen("C:\\Users\\marce\\Desktop\\Uni Projects\\C_Uni\\Images\\person.bmp", "rb");
+    nova = fopen("C:\\Users\\marce\\Desktop\\Uni Projects\\C_Uni\\Text Files\\person.txt", "wt");
 
     struct bmpHeader bH;
 
@@ -83,7 +83,7 @@ int main() {
         for (j = 0; j < bH.width-1; j++) {
 
             int media=((matriz[i][j].g)+(matriz[i][j].r)+(matriz[i][j].b))/3;
-            media = media/6;
+            media = media/26;
             fwrite(&scale[media], sizeof(char), 1, nova);
             }
             char barran = '\n';

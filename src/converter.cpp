@@ -118,7 +118,7 @@ int main() {
     bitmap = (struct pixel **) malloc(sizeof(struct pixel *) * bH.height);
 
     readBmpFile(&bH, bitmap, bitmap_image);
-    writeTxtFile(&bH, bitmap, ascii_image);
+    writeTxtFile(&bH, bitmap, ascii_image); // causes core dump 
 
     for (int i = 0; i < bH.height; i++) {
         free(bitmap[i]);

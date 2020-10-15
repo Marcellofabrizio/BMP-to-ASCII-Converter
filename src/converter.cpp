@@ -82,7 +82,7 @@ void writeTxtFile(bmpHeader *header, pixel **bitmap, FILE *ascii_image)
                          + (bitmap[i][j].g) 
                          + (bitmap[i][j].b))/3;
             
-            average/30; //oh god oh fuck I still don't get the averages
+            average/32; //oh god oh fuck I still don't get the averages
             fwrite(&SCALELIST[average], sizeof(char), 1, ascii_image);
         }
         char linebreak = '\n';

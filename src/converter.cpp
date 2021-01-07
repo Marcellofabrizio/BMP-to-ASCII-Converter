@@ -24,7 +24,7 @@ struct bmpHeader {
 
     uint16_t planes, bits;
 
-    uint32_t compression, imagesize;
+    uint32_t compressionType, imagesize;
 
     int32_t xresolution, yresolution;
 
@@ -46,7 +46,7 @@ string scaleString = " .,:;ox%#@";
 
 void printFileDetails(bmpHeader *bH) 
 {
-    printf("File Size is %d\n", bH->fileSize);
+    printf("File Size is %d bytes\n", bH->fileSize);
     printf("Bits per pixel is %hu\n", bH->bits);
     printf("X resolution: %d - Y resolution: %d (ps: pixels per meter)\n", bH->xresolution,
                                                                            bH->yresolution);
@@ -74,7 +74,12 @@ void readBmpFile(bmpHeader *header, pixel **bitmap, FILE *bmp_image)
 void writeTxtFile(bmpHeader *header, pixel **bitmap, FILE *ascii_image)
 {
     int i, j;
-    for (i = header->height; i >= 0; i--)
+    
+    printf("header height: %d\n", header->height);
+
+    for (i = header->height - 1; i >= 0; i--)
+    //bmp file is little endian, so it needs to be writen
+    //from end to start
     {
         for (j = 0; j < header->width; j++)
         {
@@ -82,7 +87,7 @@ void writeTxtFile(bmpHeader *header, pixel **bitmap, FILE *ascii_image)
                          + (bitmap[i][j].g) 
                          + (bitmap[i][j].b))/3;
             
-            average/32; //oh god oh fuck I still don't get the averages
+            average = average/10; 
             fwrite(&SCALELIST[average], sizeof(char), 1, ascii_image);
         }
         char linebreak = '\n';
@@ -109,6 +114,7 @@ int main() {
 
     if (bitmap_image == NULL)
         perror("Error opening image\n");
+
 
     fread(&bH, sizeof(struct bmpHeader), 1, bitmap_image);
     fwrite(&bH, sizeof(struct bmpHeader), 1, ascii_image);
